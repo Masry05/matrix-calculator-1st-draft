@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <title>Multiplication</title>
+</head>
+ <div><a href="/index.html">Matrix Calculator</a></div>
+<head>
+    <body>
+    <br>
+    Multiplication<br><br>
+    
+    Enter the size of the first matrix:<br>
+    Rows:
+    <input type="number" class="js-size" id="js-row-matrix1" min="1" onkeydown="
+    if(event.key=='Enter')
+      changeFocus1();">
+    Columns:
+    <input type="number" class="js-size" min="1" id="js-column-matrix1" onchange="setLimit(id);setMatrix2();" onkeydown="
+    if(event.key=='Enter'){
+      changeFocus2();
+      setMatrix1();}">
+    <button class="js-size-button" onclick="setMatrix1()">Set matrix</button>
+    <div class="js-input" id="js.input1">
+    </div>
+    
+      Enter the size of the second matrix:<br>
+    Rows:
+    <input type="number" class="js-size" min="1" id="js-row-matrix2" onchange="setLimit(id);setMatrix1();" onkeydown="
+    if(event.key=='Enter'){
+      changeFocus2()
+      setMatrix2();}">
+    Columns:
+    <input type="number" class="js-size" id="js-column-matrix2" min="1" onkeydown="
+    if(event.key=='Enter'){
+      setMatrix2();
+      document.getElementById('0,0,1').focus();}">
+    <button class="js-size-button" onclick="setMatrix2();">Set matrix</button>
+    <div class="js-input" id="js.input2"></div>
+    </div>
+    <br><div class="js-solution"></div>
+  <script src="/multiplication/multiplication.js">
+  </script>
+  </body>
+</html>

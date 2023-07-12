@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <title>Determinant</title>
+</head>
+ <div><a href="/index.html">Matrix Calculator</a></div>
+<head>
+    <body>
+    <br>
+    Determinant
+    <br><br>
+    Enter the size of the matrix:
+    <input type="number" class="js-size" placeholder="2" min="2" onkeydown="
+    if(event.key=='Enter')
+    setMatrix();">
+    <button class="js-size-button" onclick="setMatrix()">Set matrix</button>
+    <br><br>
+    <div class="js-inputs"></div>
+    <div class="js-solution"></div>
+  <script src="/determinant/Determinant.js">
+  </script>
+  </body>
+</html>
