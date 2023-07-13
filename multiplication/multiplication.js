@@ -39,21 +39,27 @@ class Fraction{
   equals(fraction){return (fraction.numerator===0)?this.numerator===fraction.numerator:this.numerator===fraction.numerator&&this.denominator===fraction.denominator;
   }
 }
-function changeFocus1(){
-  document.getElementById("js-column-matrix1").focus();}
-function changeFocus2(){
-  document.getElementById("js-column-matrix2").focus();}
 function setLimit(id){
   if(id==="js-column-matrix1")
     document.getElementById("js-row-matrix2").value=document.getElementById("js-column-matrix1").value;
   else if(id==="js-row-matrix2")
-  document.getElementById("js-column-matrix1").value=document.getElementById("js-row-matrix2").value;
+    document.getElementById("js-column-matrix1").value=document.getElementById("js-row-matrix2").value;
 }
 function check(i,j,row,column,key,n){
-  if(key==="Enter")
-    changeFocus(i,j,row,column,n);
+  if(key==="Enter"){
+    if(i===row-1&&j===column-1){
+      if(checkInput(n)){
+        if(Number(n)===1)
+          document.getElementById(`0,0,2`).focus();
+        else
+          solve();}}
+    else
+      movement(i,j,row,column,"ArrowRight",n);}
   else if(key==="ArrowUp"||key==="ArrowDown"||key==="ArrowLeft"||key==="ArrowRight")
     movement(i,j,row,column,key,n)
+  else if(key==="Backspace"&&document.getElementById(`${i},${j},${n}`).value===""){
+    movement(i,j,row,column,"ArrowLeft",n);
+    event.preventDefault();}
   else if(key!=="0"&&key!=="1"&&key!=="2"&&key!=="3"&&key!=="4"&&key!=="5"&&key!=="6"&&key!=="7"&&key!=="8"&&key!=="9"&&key!=="/"&&key!=="-"&&key!=="Backspace")
     event.preventDefault();
 }
@@ -63,7 +69,6 @@ function movement(i,j,row,column,key,n){
   row=Number(row);
   column=Number(column);
   n=Number(n);
-  
   if(key==="ArrowUp"){
     if(n===2&&i===0&&j===0)
       document.getElementById(`${document.getElementById("js-row-matrix1").value-1},${document.getElementById("js-column-matrix1").value-1},1`).focus();
@@ -90,18 +95,6 @@ function movement(i,j,row,column,key,n){
     else if(i!==row-1)
       document.getElementById(`${i+1},0,${n}`).focus();}   
   }
-function changeFocus(i,j,row,column,n){
-  if(i===row-1&&j===column-1){
-    if(checkInput(n)){
-      if(Number(n)===1)
-        document.getElementById(`0,0,2`).focus();
-      else
-        solve();
-    }
-  }
-  else
-    document.getElementById(`${j===column-1?i+1:i},${j===column-1?0:j+1},${n}`).focus();
-}
 function setMatrix1(){
   const row= Number(document.getElementById("js-row-matrix1").value);
   const column= Number(document.getElementById("js-column-matrix1").value);

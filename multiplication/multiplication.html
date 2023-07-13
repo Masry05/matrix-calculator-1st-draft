@@ -12,11 +12,11 @@
     Rows:
     <input type="number" class="js-size" id="js-row-matrix1" min="1" onkeydown="
     if(event.key=='Enter')
-      changeFocus1();">
+      document.getElementById('js-column-matrix1').focus();">
     Columns:
     <input type="number" class="js-size" min="1" id="js-column-matrix1" onchange="setLimit(id);setMatrix2();" onkeydown="
     if(event.key=='Enter'){
-      changeFocus2();
+      document.getElementById('js-column-matrix2').focus();
       setMatrix1();}">
     <button class="js-size-button" onclick="setMatrix1()">Set matrix</button>
     <div class="js-input" id="js.input1">
