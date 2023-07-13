@@ -49,10 +49,58 @@ function setLimit(id){
   else if(id==="js-row-matrix2")
   document.getElementById("js-column-matrix1").value=document.getElementById("js-row-matrix2").value;
 }
-function check(key){
-  if(key>57||key<45||key===46)
-    if(key!==66&&key!==69)
-      event.preventDefault();
+function check(i,j,row,column,key,n){
+  if(key==="Enter")
+    changeFocus(i,j,row,column,n);
+  else if(key==="ArrowUp"||key==="ArrowDown"||key==="ArrowLeft"||key==="ArrowRight")
+    movement(i,j,row,column,key,n)
+  else if(key!=="0"&&key!=="1"&&key!=="2"&&key!=="3"&&key!=="4"&&key!=="5"&&key!=="6"&&key!=="7"&&key!=="8"&&key!=="9"&&key!=="/"&&key!=="-"&&key!=="Backspace")
+    event.preventDefault();
+}
+function movement(i,j,row,column,key,n){
+  i=Number(i);
+  j=Number(j);
+  row=Number(row);
+  column=Number(column);
+  n=Number(n);
+  
+  if(key==="ArrowUp"){
+    if(n===2&&i===0&&j===0)
+      document.getElementById(`${document.getElementById("js-row-matrix1").value-1},${document.getElementById("js-column-matrix1").value-1},1`).focus();
+    if(i!==0)
+      document.getElementById(`${i-1},${j},${n}`).focus();}
+  if(key==="ArrowDown"){
+    if(n===1&&i===row-1&&j===column-1)
+      document.getElementById(`0,0,2`).focus();
+    if(i!==row-1)
+      document.getElementById(`${i+1},${j},${n}`).focus();}
+  if(key==="ArrowLeft"){
+    if(n===2&&i===0&&j===0)
+      document.getElementById(`${document.getElementById("js-row-matrix1").value-1},${document.getElementById("js-column-matrix1").value-1},1`).focus();
+    if(j!==0)
+      document.getElementById(`${i},${j-1},${n}`).focus();
+    else if(i!==0)
+      document.getElementById(`${i-1},${column-1},${n}`).focus();
+    }
+  if(key==="ArrowRight"){
+    if(n===1&&i===row-1&&j===column-1)
+      document.getElementById(`0,0,2`).focus();
+    if(j!==column-1)
+      document.getElementById(`${i},${j+1},${n}`).focus();
+    else if(i!==row-1)
+      document.getElementById(`${i+1},0,${n}`).focus();}   
+  }
+function changeFocus(i,j,row,column,n){
+  if(i===row-1&&j===column-1){
+    if(checkInput(n)){
+      if(Number(n)===1)
+        document.getElementById(`0,0,2`).focus();
+      else
+        solve();
+    }
+  }
+  else
+    document.getElementById(`${j===column-1?i+1:i},${j===column-1?0:j+1},${n}`).focus();
 }
 function setMatrix1(){
   const row= Number(document.getElementById("js-row-matrix1").value);
@@ -62,9 +110,7 @@ function setMatrix1(){
     for(let i=0;i<row;i++){
       for(let j=0;j<column;j++){
         let id=[i,j];
-          document.getElementById("js.input1").innerHTML+=`<input class="matrix1-input" onkeydown="check(event.key.charCodeAt(0));
-          if(event.key==='Enter')
-          changeFocus(${i},${j},${row},${column},1);" id="${id},1" title="[${id[0]+1},${id[1]+1}]" >\n`}
+          document.getElementById("js.input1").innerHTML+=`<input class="matrix1-input" onkeydown="check(${i},${j},${row},${column},event.key,1)" id="${id},1" title="[${id[0]+1},${id[1]+1}]" >\n`}
           document.getElementById("js.input1").innerHTML+=`<br>`
        }
         document.getElementById("js.input1").innerHTML+=`<button class="js-reset" onclick="reset1()">Reset</button><br>`;
@@ -78,26 +124,12 @@ function setMatrix2(){
       for(let i=0;i<row;i++){
         for(let j=0;j<column;j++){
           let id=[i,j];
-          document.getElementById("js.input2").innerHTML+=`<input class="matrixInput" onkeydown="check(event.key.charCodeAt(0));
-          if(event.key==='Enter')
-          changeFocus(${i},${j},${row},${column},2);" id="${id},2" title="[${id[0]+1},${id[1]+1}]" >\n`}
+          document.getElementById("js.input2").innerHTML+=`<input class="matrixInput" onkeydown="check(${i},${j},${row},${column},event.key,2)" id="${id},2" title="[${id[0]+1},${id[1]+1}]" >\n`}
           document.getElementById("js.input2").innerHTML+=`<br>`
         }
          document.getElementById("js.input2").innerHTML+=`<button class="js-reset" onclick="reset2()">Reset</button><br><br><button class="js-solve" onclick="if(checkInput(1) && checkInput(2)) solve();">Solve</button><button class="js-reset" onclick="reset3()">Reset</button>`;
       }
     }
-function changeFocus(i,j,row,column,n){
-  if(i===row-1&&j===column-1){
-    if(checkInput(n)){
-      if(Number(n)===1)
-        document.getElementById(`0,0,2`).focus();
-      else
-        solve();
-    }
-  }
-  else
-    document.getElementById(`${j===column-1?i+1:i},${j===column-1?0:j+1},${n}`).focus();
-}
 function checkInput(n){
   const row= Number(document.getElementById("js-row-matrix"+n).value);
   const column= Number(document.getElementById("js-column-matrix"+n).value);
