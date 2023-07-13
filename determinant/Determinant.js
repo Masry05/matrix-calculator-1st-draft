@@ -53,43 +53,44 @@ function setMatrix(){
       document.querySelector(".js-inputs").innerHTML+=`<button class="js-solve" onclick="if(checkInput()) solve();">Solve</button>
       <button class="js-reset" onclick="reset()">Reset</button>`;
     }
+    document.getElementById("0,0").focus();
   }
-function check(i,j,size,key){
-  if(key==="Enter")
-    changeFocus(i,j,size);
-  else if(key==="ArrowUp"||key==="ArrowDown"||key==="ArrowLeft"||key==="ArrowRight")
-    movement(i,j,size,key)
-  else if(key!=="0"&&key!=="1"&&key!=="2"&&key!=="3"&&key!=="4"&&key!=="5"&&key!=="6"&&key!=="7"&&key!=="8"&&key!=="9"&&key!=="/"&&key!=="-"&&key!=="Backspace")
-    event.preventDefault();
-}
-function movement(i,j,size,key){
-  i=Number(i);
-  j=Number(j);
-  size=Number(size);
-  if(key==="ArrowUp")
-    if(i!==0)
-      document.getElementById(`${i-1},${j}`).focus();
-  if(key==="ArrowDown")
-    if(i!==size-1)
-    document.getElementById(`${i+1},${j}`).focus();
-  if(key==="ArrowLeft"){
-    if(j!==0)
-      document.getElementById(`${i},${j-1}`).focus();
-    else if(i!==0)
-      document.getElementById(`${i-1},${size-1}`).focus();}
-  if(key==="ArrowRight"){
-    if(j!==size-1)
-    document.getElementById(`${i},${j+1}`).focus();
-    else if(i!==size-1)
-    document.getElementById(`${i+1},0`).focus();}
+  function check(i,j,size,key){
+    if(key==="Enter"){
+      if(i===size-1&&j===size-1){
+        if(checkInput())
+          solve();}
+      else
+        movement(i,j,size,"ArrowRight")}
+    else if(key==="ArrowUp"||key==="ArrowDown"||key==="ArrowLeft"||key==="ArrowRight")
+      movement(i,j,size,key)
+    else if(key==="Backspace"&&document.getElementById(`${i},${j}`).value===""){
+      movement(i,j,size,"ArrowLeft");
+      event.preventDefault();}
+    else if(key!=="0"&&key!=="1"&&key!=="2"&&key!=="3"&&key!=="4"&&key!=="5"&&key!=="6"&&key!=="7"&&key!=="8"&&key!=="9"&&key!=="/"&&key!=="-"&&key!=="Backspace")
+      event.preventDefault();
   }
-function changeFocus(i,j,size){
-  if(i===size-1&&j===size-1){
-    if(checkInput())
-      solve();}
-    else
-      document.getElementById(`${j===size-1?i+1:i},${j===size-1?0:j+1}`).focus();
-  }
+  function movement(i,j,size,key){
+    i=Number(i);
+    j=Number(j);
+    size=Number(size);
+    if(key==="ArrowUp")
+      if(i!==0)
+        document.getElementById(`${i-1},${j}`).focus();
+    if(key==="ArrowDown")
+      if(i!==size-1)
+      document.getElementById(`${i+1},${j}`).focus();
+    if(key==="ArrowLeft"){
+      if(j!==0)
+        document.getElementById(`${i},${j-1}`).focus();
+      else if(i!==0)
+        document.getElementById(`${i-1},${size-1}`).focus();}
+    if(key==="ArrowRight"){
+      if(j!==size-1)
+      document.getElementById(`${i},${j+1}`).focus();
+      else if(i!==size-1)
+      document.getElementById(`${i+1},0`).focus();}
+    }
 function reset(){
   const size= Number(document.querySelector(".js-size").value);
   for(let i=0;i<size;i++)
