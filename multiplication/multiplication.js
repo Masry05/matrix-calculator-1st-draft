@@ -80,20 +80,23 @@ function movement(i,j,row,column,key,n){
     if(i!==row-1)
       document.getElementById(`${i+1},${j},${n}`).focus();}
   if(key==="ArrowLeft"){
+    if(document.getElementById(`${i},${j},${n}`).selectionStart===0){
     if(n===2&&i===0&&j===0)
       document.getElementById(`${document.getElementById("js-row-matrix1").value-1},${document.getElementById("js-column-matrix1").value-1},1`).focus();
     if(j!==0)
       document.getElementById(`${i},${j-1},${n}`).focus();
     else if(i!==0)
       document.getElementById(`${i-1},${column-1},${n}`).focus();
-    }
+      event.preventDefault();}}
   if(key==="ArrowRight"){
+    if(document.getElementById(`${i},${j},${n}`).selectionStart===document.getElementById(`${i},${j},${n}`).value.length){
     if(n===1&&i===row-1&&j===column-1)
       document.getElementById(`0,0,2`).focus();
     if(j!==column-1)
       document.getElementById(`${i},${j+1},${n}`).focus();
     else if(i!==row-1)
-      document.getElementById(`${i+1},0,${n}`).focus();}   
+      document.getElementById(`${i+1},0,${n}`).focus();
+      event.preventDefault();}}   
   }
 function setMatrix1(){
   const row= Number(document.getElementById("js-row-matrix1").value);

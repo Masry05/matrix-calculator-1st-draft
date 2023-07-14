@@ -81,16 +81,19 @@ function setMatrix(){
       if(i!==size-1)
       document.getElementById(`${i+1},${j}`).focus();
     if(key==="ArrowLeft"){
+      if(document.getElementById(`${i},${j}`).selectionStart===0){
       if(j!==0)
         document.getElementById(`${i},${j-1}`).focus();
       else if(i!==0)
-        document.getElementById(`${i-1},${size-1}`).focus();}
+        document.getElementById(`${i-1},${size-1}`).focus();
+        event.preventDefault();}}
     if(key==="ArrowRight"){
+      if(document.getElementById(`${i},${j}`).selectionStart===document.getElementById(`${i},${j}`).value.length){
       if(j!==size-1)
       document.getElementById(`${i},${j+1}`).focus();
       else if(i!==size-1)
-      document.getElementById(`${i+1},0`).focus();}
-    }
+      document.getElementById(`${i+1},0`).focus();
+      event.preventDefault();}}}
 function reset(){
   const size= Number(document.querySelector(".js-size").value);
   for(let i=0;i<size;i++)
